@@ -30,6 +30,11 @@ namespace WebSubClientSampleApp
 
         private void TextBoxSubscriptionUrl_KeyUp(object sender, KeyEventArgs e)
         {
+            if (e.Key != Key.Enter)
+            {
+                return;
+            }
+
             try
             {
                 Uri url;
