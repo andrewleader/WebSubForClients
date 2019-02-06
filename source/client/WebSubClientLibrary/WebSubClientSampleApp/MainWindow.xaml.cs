@@ -36,7 +36,9 @@ namespace WebSubClientSampleApp
                 if (Uri.TryCreate(TextBoxSubscriptionUrl.Text, UriKind.Absolute, out url))
                 {
                     _currSubscription = WebSubClient.Subscribe(url);
+                    _currSubscription.OnClosed += _currSubscription_OnClosed;
                     _currSubscription.OnReceived += _currSubscription_OnReceived;
+                    _currSubscription.Start();
                     AddText("Subscribed");
                 }
                 else
@@ -48,6 +50,14 @@ namespace WebSubClientSampleApp
             {
                 MessageBox.Show("Please enter a valid URL");
             }
+        }
+
+        private void _currSubscription_OnClosed(object sender, EventArgs e)
+        {
+            Dispatcher.Invoke(delegate
+            {
+                AddText("Closed");
+            });
         }
 
         private void _currSubscription_OnReceived(object sender, EventArgs e)
