@@ -31,6 +31,8 @@ namespace WebSubClientLibrary
             switch (e.State)
             {
                 case EventSourceState.CLOSED:
+                    _eventSource.StateChanged -= _eventSource_StateChanged;
+                    _eventSource.EventReceived -= _eventSource_EventReceived;
                     OnClosed?.Invoke(this, new EventArgs());
                     break;
             }
